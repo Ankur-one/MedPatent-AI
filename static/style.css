@@ -1,0 +1,375 @@
+/* MedPatent AI - Main Styles */
+:root {
+    --primary: #087f8c;
+    --primary-dark: #066570;
+    --background: #f4f8fb;
+    --surface: #ffffff;
+    --text: #203344;
+    --muted: #718096;
+    --border: #e0e8ef;
+    --user-message: #e4f4f5;
+    --shadow: 0 8px 30px rgba(31, 61, 81, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    padding: 24px;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+}
+
+button,
+textarea {
+    font: inherit;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1000px;
+    min-height: calc(100vh - 48px);
+    margin: 0 auto;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.brand-icon,
+.welcome-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e2f5f4;
+    color: var(--primary);
+    border-radius: 12px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.brand-icon {
+    width: 48px;
+    height: 48px;
+}
+
+.brand h1 {
+    font-size: 22px;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+}
+
+.brand p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    background: #22a879;
+    border-radius: 50%;
+}
+
+/* Main content */
+
+.main-content {
+    width: 100%;
+    max-width: 800px;
+    min-height: 0;
+    margin: 0 auto;
+    padding: 30px 24px 20px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+/* Welcome section */
+
+.welcome-section {
+    padding: 34px 12px 28px;
+    text-align: center;
+}
+
+.welcome-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 18px;
+    border-radius: 18px;
+    font-size: 34px;
+}
+
+.welcome-section h2 {
+    margin-bottom: 10px;
+    font-size: clamp(23px, 4vw, 30px);
+    letter-spacing: -0.7px;
+}
+
+.welcome-section p {
+    max-width: 480px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+/* Conversation area */
+
+.chat-area {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    flex: 1;
+    min-height: 180px;
+    max-height: 48vh;
+    overflow-y: auto;
+    padding: 12px 4px 20px;
+    scroll-behavior: smooth;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 88%;
+}
+
+.message.user {
+    align-self: flex-end;
+}
+
+.message.assistant {
+    align-self: flex-start;
+}
+
+.message-label {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.message.user .message-label {
+    text-align: right;
+}
+
+.message-content {
+    padding: 13px 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8fafc;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.message.user .message-content {
+    background: var(--user-message);
+    border-color: #cce9e9;
+    border-bottom-right-radius: 4px;
+}
+
+.message.assistant .message-content {
+    border-bottom-left-radius: 4px;
+}
+
+/* Medical information disclaimer */
+
+.disclaimer {
+    padding: 11px 14px;
+    margin: 8px 0 16px;
+    background: #f5f9fc;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Chat input */
+
+.input-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 10px;
+    background: var(--surface);
+    border: 1px solid #d3dfe8;
+    border-radius: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-form:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(8, 127, 140, 0.1);
+}
+
+.input-form textarea {
+    flex: 1;
+    min-width: 0;
+    max-height: 140px;
+    padding: 9px 10px;
+    resize: none;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.input-form textarea::placeholder {
+    color: #8b9aaa;
+}
+
+.input-form button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 0 17px;
+    border: none;
+    border-radius: 10px;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.2s, opacity 0.2s;
+}
+
+.input-form button:hover {
+    background: var(--primary-dark);
+}
+
+.input-form button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.footer-note {
+    padding-top: 13px;
+    color: var(--muted);
+    font-size: 11px;
+    text-align: center;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Mobile responsive design */
+
+@media (max-width: 600px) {
+    body {
+        padding: 0;
+    }
+
+    .app-container {
+        min-height: 100vh;
+        min-height: 100dvh;
+        border: none;
+        border-radius: 0;
+    }
+
+    .header {
+        padding: 17px 16px;
+    }
+
+    .brand {
+        gap: 10px;
+    }
+
+    .brand-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .brand h1 {
+        font-size: 19px;
+    }
+
+    .brand p {
+        font-size: 11px;
+    }
+
+    .status {
+        font-size: 11px;
+    }
+
+    .main-content {
+        padding: 20px 14px 14px;
+    }
+
+    .welcome-section {
+        padding: 30px 5px 24px;
+    }
+
+    .welcome-section p {
+        font-size: 14px;
+    }
+
+    .chat-area {
+        max-height: none;
+    }
+
+    .message {
+        max-width: 94%;
+    }
+
+    .input-form {
+        gap: 6px;
+        padding: 7px;
+    }
+
+    .input-form button {
+        gap: 5px;
+        padding: 0 12px;
+    }
+
+    .disclaimer {
+        font-size: 11px;
+    }
+}
