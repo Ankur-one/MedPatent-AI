@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f5f9fc">
     <title>MedPatent AI | Medical Innovation Assistant</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="./static/style.css">
 </head>
 <body>
     <div class="app-container">
@@ -71,6 +71,16 @@
     </div>
 
     <script>
+        // =========================================================================
+        // BACKEND CONFIGURATION:
+        // When running on GitHub Pages, set your live Render backend URL below:
+        // Example: const RENDER_BACKEND_URL = "https://medpatent-ai.onrender.com";
+        // =========================================================================
+        const RENDER_BACKEND_URL = "https://YOUR-RENDER-APP-NAME.onrender.com";
+
+        const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+        const BACKEND_URL = isLocal ? "" : RENDER_BACKEND_URL.replace(/\/+$/, "");
+
         const chatForm = document.getElementById("chatForm");
         const messageInput = document.getElementById("messageInput");
         const chatArea = document.getElementById("chatArea");
@@ -112,12 +122,16 @@
             sendLabel.textContent = "Thinking...";
 
             const loadingMessage = addMessage(
-                "Generating your response...",
+                "Generating your response... (Note: Free tier backends on Render may take ~30-50s to wake up on first request)",
                 "assistant"
             );
 
             try {
-                const response = await fetch("/chat", {
+                if (!isLocal && BACKEND_URL.includes("YOUR-RENDER-APP-NAME")) {
+                    throw new Error("Please configure your Render backend URL in index.html (line 80).");
+                }
+
+                const response = await fetch(`${BACKEND_URL}/chat`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

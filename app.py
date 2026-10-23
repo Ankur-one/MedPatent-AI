@@ -2,12 +2,15 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
+from flask_cors import CORS
 from groq import Groq
 
 # Load environment variables from .env
 load_dotenv()
 
 app = Flask(__name__)
+# Enable CORS so GitHub Pages frontend can call the Render backend
+CORS(app)
 
 # Read API configuration securely
 api_key = os.getenv("GROQ_API_KEY")
@@ -40,7 +43,19 @@ Do not assume access to previous conversation messages.
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return jsonify({
+        "status": "online",
+        "service": "MedPatent AI API",
+        "endpoints": {
+            "chat": "POST /chat",
+            "health": "GET /health"
+        }
+    })
+
+
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok"})
 
 
 @app.route("/chat", methods=["POST"])
@@ -83,4 +98,5 @@ def chat():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
