@@ -43,14 +43,7 @@ Do not assume access to previous conversation messages.
 
 @app.route("/")
 def home():
-    return jsonify({
-        "status": "online",
-        "service": "MedPatent AI API",
-        "endpoints": {
-            "chat": "POST /chat",
-            "health": "GET /health"
-        }
-    })
+    return render_template("index.html")
 
 
 @app.route("/health")

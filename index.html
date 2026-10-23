@@ -1,186 +1,10 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f5f9fc">
-    <title>MedPatent AI | Medical Innovation Assistant</title>
-    <link rel="stylesheet" href="./static/style.css">
-</head>
-<body>
-    <div class="app-container">
-
-        <header class="header">
-            <div class="brand">
-                <div class="brand-icon" aria-hidden="true">✚</div>
-                <div>
-                    <h1>MedPatent AI</h1>
-                    <p>Medical Innovation Assistant</p>
-                </div>
-            </div>
-            <div class="status">
-                <span class="status-dot"></span>
-                AI Assistant
-            </div>
-        </header>
-
-        <main class="main-content">
-            <section class="welcome-section" id="welcome">
-                <div class="welcome-icon" aria-hidden="true">✚</div>
-                <h2>Explore Medical Innovation</h2>
-                <p>
-                    Discuss medical invention concepts, explore technical ideas,
-                    and learn about the patent research process.
-                </p>
-            </section>
-
-            <section
-                class="chat-area"
-                id="chatArea"
-                aria-label="Conversation"
-                aria-live="polite"
-            ></section>
-
-            <div class="disclaimer">
-                AI-generated ideas are for informational purposes only.
-                Patentability is not guaranteed.
-            </div>
-
-            <form class="input-form" id="chatForm">
-                <label for="messageInput" class="visually-hidden">
-                    Enter your medical patent question
-                </label>
-                <textarea
-                    id="messageInput"
-                    name="message"
-                    placeholder="Ask about a medical invention idea..."
-                    rows="1"
-                    maxlength="4000"
-                    required
-                ></textarea>
-                <button type="submit" id="sendButton" aria-label="Send message">
-                    <span id="sendLabel">Send</span>
-                    <span aria-hidden="true">➤</span>
-                </button>
-            </form>
-
-            <p class="footer-note">
-                MedPatent AI can make mistakes. Verify important information.
-            </p>
-        </main>
-    </div>
-
-    <script>
-        // =========================================================================
-        // BACKEND CONFIGURATION:
-        // When running on GitHub Pages, set your live Render backend URL below:
-        // Example: const RENDER_BACKEND_URL = "https://medpatent-ai.onrender.com";
-        // =========================================================================
-        const RENDER_BACKEND_URL = "https://YOUR-RENDER-APP-NAME.onrender.com";
-
-        const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-        const BACKEND_URL = isLocal ? "" : RENDER_BACKEND_URL.replace(/\/+$/, "");
-
-        const chatForm = document.getElementById("chatForm");
-        const messageInput = document.getElementById("messageInput");
-        const chatArea = document.getElementById("chatArea");
-        const sendButton = document.getElementById("sendButton");
-        const sendLabel = document.getElementById("sendLabel");
-        const welcome = document.getElementById("welcome");
-
-        function addMessage(text, sender) {
-            const message = document.createElement("div");
-            message.className = `message ${sender}`;
-
-            const label = document.createElement("div");
-            label.className = "message-label";
-            label.textContent = sender === "user" ? "You" : "MedPatent AI";
-
-            const content = document.createElement("div");
-            content.className = "message-content";
-            content.textContent = text;
-
-            message.append(label, content);
-            chatArea.appendChild(message);
-
-            chatArea.scrollTop = chatArea.scrollHeight;
-            return message;
-        }
-
-        chatForm.addEventListener("submit", async (event) => {
-            event.preventDefault();
-
-            const message = messageInput.value.trim();
-            if (!message || sendButton.disabled) return;
-
-            welcome.hidden = true;
-            addMessage(message, "user");
-
-            messageInput.value = "";
-            messageInput.style.height = "auto";
-            sendButton.disabled = true;
-            sendLabel.textContent = "Thinking...";
-
-            const loadingMessage = addMessage(
-                "Generating your response... (Note: Free tier backends on Render may take ~30-50s to wake up on first request)",
-                "assistant"
-            );
-
-            try {
-                if (!isLocal && BACKEND_URL.includes("YOUR-RENDER-APP-NAME")) {
-                    throw new Error("Please configure your Render backend URL in index.html (line 80).");
-                }
-
-                const response = await fetch(`${BACKEND_URL}/chat`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ message })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || "Something went wrong.");
-                }
-
-                loadingMessage.querySelector(".message-content").textContent =
-                    data.answer;
-            } catch (error) {
-                loadingMessage.querySelector(".message-content").textContent =
-                    error.message || "Unable to connect. Please try again.";
-            } finally {
-                sendButton.disabled = false;
-                sendLabel.textContent = "Send";
-                messageInput.focus();
-                chatArea.scrollTop = chatArea.scrollHeight;
-            }
-        });
-
-        messageInput.addEventListener("input", () => {
-            messageInput.style.height = "auto";
-            messageInput.style.height =
-                Math.min(messageInput.scrollHeight, 140) + "px";
-        });
-
-        messageInput.addEventListener("keydown", (event) => {
-            if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault();
-                chatForm.requestSubmit();
-            }
-        });
-    </script>
-=======
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f7fafc">
-<title>MedPatent AI — Medical Innovation Assistant Ai</title>
+<title>MedPatent AI — Medical Innovation Assistant</title>
 <style>
 :root {
   --navy: #142b4a;
@@ -232,7 +56,9 @@ button { cursor: pointer; }
   color: white;
   background: var(--blue);
   font-weight: 650;
+  transition: background 0.2s;
 }
+.new-chat:hover { background: #174fb9; }
 .side-label {
   margin: 28px 0 12px;
   font-size: 11px;
@@ -370,13 +196,14 @@ h1 {
   color: var(--muted);
   font-size: 12px;
 }
+.clear:hover { color: var(--navy); }
 .messages {
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 18px;
   min-height: 120px;
-  max-height: 390px;
+  max-height: 460px;
   overflow-y: auto;
 }
 .welcome-note {
@@ -405,6 +232,7 @@ h1 {
   font-size: 13px;
   line-height: 1.75;
   overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 .message.user .bubble {
   background: #e9f2ff;
@@ -447,6 +275,7 @@ textarea::placeholder { color: #9aa8b9; }
   padding: 11px 15px;
   font-size: 12px;
   font-weight: 700;
+  transition: background 0.2s;
 }
 .send:hover { background: #174fb9; }
 .send:disabled { opacity: .6; cursor: wait; }
@@ -583,6 +412,17 @@ textarea::placeholder { color: #9aa8b9; }
 </div>
 
 <script>
+// =========================================================================
+// BACKEND CONFIGURATION:
+// When deployed on GitHub Pages, replace the URL below with your Render URL:
+// Example: const RENDER_BACKEND_URL = "https://medpatent-ai.onrender.com";
+// =========================================================================
+const RENDER_BACKEND_URL = "https://YOUR-RENDER-APP-NAME.onrender.com";
+
+const isLocal = window.location.hostname === "localhost" || 
+                window.location.hostname === "127.0.0.1";
+const BACKEND_URL = isLocal ? "" : RENDER_BACKEND_URL.replace(/\/+$/, "");
+
 const messages = document.getElementById("messages");
 const question = document.getElementById("question");
 const form = document.getElementById("chatForm");
@@ -608,7 +448,6 @@ function addMessage(text, role) {
 
   const bubble = document.createElement("div");
   bubble.className = "bubble";
-  // Render text safely; user input is never interpreted as HTML.
   bubble.textContent = text;
 
   row.append(avatar, bubble);
@@ -617,45 +456,7 @@ function addMessage(text, role) {
   return row;
 }
 
-function demoReply(text) {
-  const lower = text.toLowerCase();
-
-  if (lower.includes("novelty") || lower.includes("inventive step") ||
-      lower.includes("patentability")) {
-    return "For preliminary research, consider three separate questions:\n\n" +
-      "1. Novelty: Is the relevant invention already disclosed in earlier public material?\n\n" +
-      "2. Inventive step: Would the difference from existing knowledge be non-obvious to a person skilled in the field under the applicable law?\n\n" +
-      "3. Patentability: Does the invention meet all relevant legal requirements and exclusions in the target jurisdiction?\n\n" +
-      "This is a general educational explanation, not a legal assessment. A patent professional should evaluate the specific invention.";
-  }
-
-  if (lower.includes("search") || lower.includes("existing patent") ||
-      lower.includes("compare")) {
-    return "Here is a preliminary patent-research checklist:\n\n" +
-      "1. Describe the medical problem and proposed solution.\n" +
-      "2. List key technical features, alternative terms, and relevant classifications.\n" +
-      "3. Search Google Patents, WIPO PATENTSCOPE, and the relevant national patent database.\n" +
-      "4. Review claims, abstracts, drawings, publication dates, and cited documents.\n" +
-      "5. Record similarities and differences, and verify important documents at their original source.\n\n" +
-      "A preliminary search cannot guarantee that an invention is patentable or that no similar invention exists.";
-  }
-
-  if (lower.includes("concept") || lower.includes("idea") ||
-      lower.includes("invention")) {
-    return "You can structure an early-stage medical innovation concept like this:\n\n" +
-      "• Problem: What specific unmet need are you addressing?\n" +
-      "• Intended users: Who might use the proposed solution?\n" +
-      "• Proposed approach: What is the technical concept?\n" +
-      "• Existing alternatives: What solutions are already available?\n" +
-      "• Differentiating features: What technical differences need investigation?\n" +
-      "• Evidence needed: What testing, safety review, or validation would be required?\n\n" +
-      "Keep the concept hypothetical until it has been reviewed by relevant technical, clinical, and legal experts.";
-  }
-
-  return "Thanks for your question. This page currently demonstrates the MedPatent AI chat interface, but it is not connected to a live language model.\n\nTo provide a genuine AI-generated answer to your specific question, connect this frontend to your separately hosted backend API. Do not place private API keys in this public website.";
-}
-
-function ask(text) {
+async function ask(text) {
   const value = text.trim();
   if (!value || send.disabled) return;
 
@@ -669,16 +470,41 @@ function ask(text) {
   send.disabled = true;
   send.textContent = "Thinking…";
 
-  const typing = addMessage("Preparing a demo response…", "assistant");
+  const typing = addMessage(
+    "Generating your response... (Note: Free tier backends on Render may take ~30-50s to wake up on first request)",
+    "assistant"
+  );
 
-  // Demo only. Replace this with a fetch() call to your backend API.
-  setTimeout(() => {
-    typing.querySelector(".bubble").textContent = demoReply(value);
+  try {
+    if (!isLocal && BACKEND_URL.includes("YOUR-RENDER-APP-NAME")) {
+      throw new Error("Please configure your Render backend URL in index.html (line 420).");
+    }
+
+    const endpoint = BACKEND_URL ? `${BACKEND_URL}/chat` : "/chat";
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: value })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to get response from server.");
+    }
+
+    typing.querySelector(".bubble").textContent = data.answer || "No response received.";
+  } catch (error) {
+    typing.querySelector(".bubble").textContent = 
+      error.message || "Unable to connect to the backend server. Please try again.";
+  } finally {
     send.disabled = false;
     send.textContent = "Send ↑";
     question.focus();
     scrollChat();
-  }, 550);
+  }
 }
 
 form.addEventListener("submit", event => {
@@ -724,6 +550,5 @@ document.getElementById("newChat").addEventListener("click", () => {
   question.focus();
 });
 </script>
->>>>>>> 733543843bd99c48e70b588fd2c85c0950add5d6
 </body>
 </html>
